@@ -26,16 +26,19 @@ let model = {
       { locations: ["53", "55", "56"], hits: ["", "", ""] }
    ],
 
-   fire: function(location) {
+   fire: function(guess) {
       this.guesses++;
       for (let i = 0; i < this.shipNumber; i++) {
          let ship = this.ships[i];
          for (let j = 0; j < this.shipSize; i++) {
-            if (location === ship.locations[j]) {
-               ship.hits[j] = "true";
-               view.renderHit(location);
+            let location = ship.locations[j];
+            if (guess === location) {
+               ship.hits.push("hit");
+               view.renderHit(guess);
+               return true;
             } else {
-               view.renderMiss(location);
+               view.renderMiss(guess);
+               return false;
             }
          }
       }
