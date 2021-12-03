@@ -26,11 +26,26 @@ let model = {
       { locations: ["53", "55", "56"], hits: ["", "", ""] }
    ],
 
-   fire: function() {
-
+   fire: function(location) {
+      this.guesses++;
+      for (let i = 0; i < this.shipNumber; i++) {
+         let ship = this.ships[i];
+         for (let j = 0; j < this.shipSize; i++) {
+            if (location === ship.locations[j]) {
+               ship.hits[j] = "true";
+               view.renderHit(location);
+            } else {
+               view.renderMiss(location);
+            }
+         }
+      }
    }
 
 };
+
+model.fire("34");
+model.fire("00");
+model.fire("45");
 
 
 
