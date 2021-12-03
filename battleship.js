@@ -30,17 +30,9 @@ let model = {
       this.guesses++;
       for (let i = 0; i < this.shipNumber; i++) {
          let ship = this.ships[i];
-         for (let j = 0; j < this.shipSize; i++) {
-            let location = ship.locations[j];
-            if (guess === location) {
-               ship.hits.push("hit");
-               view.renderHit(guess);
-               return true;
-            } else {
-               view.renderMiss(guess);
-               return false;
-            }
-         }
+         let location = ship.locations;
+         let index = location.indexOf(guess);
+         console.log(index);
       }
    }
 
