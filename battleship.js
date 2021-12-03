@@ -15,7 +15,21 @@ let view = {
 };
 
 let model = {
-   
+   playgroundSize: 7,
+   shipSize: 3,
+   shipNumber: 3,
+   guesses: 0,
+   shipSunk: 0,
+   ships: [
+      { locations: ["34", "44", "54"], hits: ["", "", ""] },
+      { locations: ["00", "01", "02"], hits: ["", "", ""] },
+      { locations: ["53", "55", "56"], hits: ["", "", ""] }
+   ],
+
+   fire: function() {
+
+   }
+
 };
 
 
