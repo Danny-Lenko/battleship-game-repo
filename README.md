@@ -27,17 +27,18 @@
 
 ### What I learned
 
-1) the Utility Classes "gap" property to use between flex and grid elements (html customizable variable)
+1) the way to present ships in the game within OOP
 
-```css
-.flex {
-   display: flex;
-   gap: var(--gap, 1.6rem);
-}
-.grid {
-   display: grid;
-   gap: var(--gap, 1.6rem);
-}
+```js
+let model = {
+  
+  ships = [
+    { locations: ["", "", ""], hits: ["", "", ""] },
+    { locations: ["", "", ""], hits: ["", "", ""] },
+    
+  ],
+  
+};
 ```
 
 ### Continued development
