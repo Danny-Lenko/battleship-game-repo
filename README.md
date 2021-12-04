@@ -48,7 +48,13 @@ let model = {
 let index = ship.locations.indexOf(guess);
 ```
 
-3) making chosen functions load in advance
+3) string.charAt(index) method returns a character of a string, located on the specified index
+```js
+// I use it to get letter out of the user's input and turn it into a number later on 
+let firstChar = guess.charAt(0);
+```
+
+4) making chosen functions load in advance
 ```js
 window.onload = init;
 ```
