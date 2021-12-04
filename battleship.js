@@ -18,7 +18,6 @@ let model = {
    playgroundSize: 7,
    shipSize: 3,
    shipNumber: 3,
-   guesses: 0,
    shipSunk: 0,
    ships: [
       { locations: ["34", "44", "54"], hits: ["", "", ""] },
@@ -34,6 +33,7 @@ let model = {
          if (index >= 0) {
             ship.hits[index] = "hit";
             if (this.isSunk) {
+               view.showMessage("You sank my battleship!");
                this.shipSunk++;
             }
             view.renderHit(guess);
@@ -54,6 +54,29 @@ let model = {
    }
 
 };
+
+let controller = {
+   guesses: 0,
+
+   processGuess: function(guess) {
+      
+   }
+
+};
+
+function init() {
+   const fireButton = document.querySelector('#fireButton');
+   fireButton.addEventListener('click', function() {
+      console.log("btnClicked");
+   });
+
+}
+window.onload = init;
+
+
+
+
+
 
 model.fire("34");
 model.fire("02");
