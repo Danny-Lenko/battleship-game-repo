@@ -30,17 +30,35 @@ let model = {
       this.guesses++;
       for (let i = 0; i < this.shipNumber; i++) {
          let ship = this.ships[i];
-         let location = ship.locations;
-         let index = location.indexOf(guess);
-         console.log(index);
+         let index = ship.locations.indexOf(guess);
+         if (index >= 0) {
+            ship.hits[index] = "hit";
+            if (this.isSunk) {
+               this.shipSunk++;
+            }
+            view.renderHit(guess);
+            return true;
+         }
       }
+      view.renderMiss(guess);
+      return false;
+   },
+
+   isSunk: function(ship) {
+      for (let i = 0; i < this.shipSize; i++) {
+         if (ship.hits[i] !== "hit") {
+            return false;
+         }
+      }
+      return true;
    }
 
 };
 
 model.fire("34");
-model.fire("00");
+model.fire("02");
 model.fire("45");
+model.fire("56");
 
 
 
