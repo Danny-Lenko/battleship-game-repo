@@ -40,7 +40,14 @@ let model = {
   
 };
 ```
-2) making chosen functions load in advance
+
+2) .indexOf() method returns an index of its value in the brackets. Used to find index inside both arrays and strings
+// I check if the locations array has a sought element and if it does the method returns its index. Otherwise it returns -1. The index variable keeps the result.
+```js
+let index = ship.locations.indexOf(guess);
+```
+
+3) making chosen functions load in advance
 ```js
 window.onload = init;
 ```
