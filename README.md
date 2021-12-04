@@ -40,6 +40,10 @@ let model = {
   
 };
 ```
+2) making chosen functions load in advance
+```js
+window.onload = init;
+```
 
 ### Continued development
 
