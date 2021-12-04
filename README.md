@@ -53,8 +53,17 @@ let index = ship.locations.indexOf(guess);
 // I use it to get letter out of the user's input and turn it into a number later on 
 let firstChar = guess.charAt(0);
 ```
+4) the isNaN() function determines whether a value is NaN (not a number) or not
+```js
+// I use it to check whether a user's guess follows the demands,
+// i.e. if any value is not a number, the warning appears
+if ( isNaN(row) || isNaN(column) ) {
+   alert("Oops, that is not on the board");
+}
 
-4) making chosen functions load in advance
+```
+
+5) making chosen functions load in advance
 ```js
 window.onload = init;
 ```
