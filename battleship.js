@@ -59,10 +59,30 @@ let controller = {
    guesses: 0,
 
    processGuess: function(guess) {
-      
+      guess.[0]
    }
 
 };
+
+function parseGuess(guess) {
+   let lettersArr = ["A", "B", "C", "D", "E", "F", "G"];
+
+   if (guess === null || guess.length !== 2) {
+      alert("Oops, please enter a letter and a number on the board");
+   } else {
+      let firstChar = guess.charAt(0);
+      let row = lettersArr.indexOf(firstChar);
+      let column = guess.charAt(1);
+
+      if ( isNaN(row) || isNaN(column) ) {
+         alert("Oops, that is not on the board");
+      } else if (row < 0 || row >= model.playgroundSize 
+                 || column < 0 || column >= model.playgroundSize) {
+         alert("Oops, that's off the board!");
+      }
+   }
+   
+}
 
 function init() {
    const fireButton = document.querySelector('#fireButton');
@@ -71,7 +91,6 @@ function init() {
    });
 
 }
-window.onload = init;
 
 
 
