@@ -68,6 +68,26 @@ if ( isNaN(row) || isNaN(column) ) {
 window.onload = init;
 ```
 
+6) using .click() method to add keyboard functionality to a button
+```js
+// used this method to invoke a function via keyboard event
+// the function is initially listens to mouse clicks
+function init() {
+(...)
+   let guessInput = document.getElementById('guessInput');
+   guessInput.onkeyup = handleKeyPress;
+}
+
+function handleKeyPress(e) {
+   let fireButton = document.getElementById('fireButton');
+   if(e.key === "Enter") {
+      fireButton.click();
+      return false;
+   }
+}
+
+```
+
 ### Continued development
 
 * CSS grid;
