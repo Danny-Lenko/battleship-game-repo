@@ -30,13 +30,15 @@ let model = {
       for (let i = 0; i < this.shipsNumber; i++) {
          let ship = this.ships[i];
          let index = ship.locations.indexOf(guess);
+
          if (index >= 0) {
             ship.hits[index] = "hit";
-            if (this.isSunk) {
+            view.renderHit(guess);
+
+            if (this.isSunk(ship)) {
                view.showMessage("You sank my battleship!");
                this.shipsSunk++;
             }
-            view.renderHit(guess);
             return true;
          }
       }
@@ -68,12 +70,7 @@ let controller = {
          }
       }
    }
-
 };
-
-controller.processGuess("D4");
-controller.processGuess("E4");
-controller.processGuess("C4");
 
 function parseGuess(guess) {
    let lettersArr = ["A", "B", "C", "D", "E", "F", "G"];
@@ -97,16 +94,30 @@ function parseGuess(guess) {
    return null;
 }
 
+function init() {
+   const fireButton = document.querySelector('#fireButton');
+   const guessInput = document.querySelector('#guessInput');
+   fireButton.onclick = processFireBtn;
+   guessInput.onkeypress = processEnterKey;
 
+}
+window.onload = init();
 
+function processFireBtn() {
+   const guessInput = document.querySelector('#guessInput');
+   let guess = guessInput.value
+   controller.processGuess(guess);
+   guessInput.value = "";
+}
 
-// function init() {
-//    const fireButton = document.querySelector('#fireButton');
-//    fireButton.addEventListener('click', function() {
-//       console.log("btnClicked");
-//    });
-
-// }
+function processEnterKey(e) {
+   const guessInput = document.querySelector('#guessInput');
+   let guess = guessInput.value
+   if (e.key === "Enter") {
+      controller.processGuess(guess);
+      guessInput.value = "";
+   }
+}
 
 
 
