@@ -20,9 +20,9 @@ let model = {
    shipsNumber: 3,
    shipsSunk: 0,
    ships: [
-      { locations: ["34", "44", "54"], hits: ["", "", ""] },
-      { locations: ["00", "01", "02"], hits: ["", "", ""] },
-      { locations: ["53", "55", "56"], hits: ["", "", ""] }
+      { locations: ["", "", ""], hits: ["", "", ""] },
+      { locations: ["", "", ""], hits: ["", "", ""] },
+      { locations: ["", "", ""], hits: ["", "", ""] }
    ],
 
    fire: function(guess) {
@@ -53,7 +53,46 @@ let model = {
          }
       }
       return true;
+   },
+
+   generateShipLocations: function() {
+      let locations;
+      for (let i = 0; i < this.shipsNumber; i++) {
+         do {
+            locations = this.generateShip;
+         } while (this.collision(locations));
+         this.ships[i].locations = locations;
+      }
+
+   },
+
+   generateShip: function() {
+      let direction = Math.floor(Math.random() * 2);
+      let row, col;
+      let newShipLocations = [];
+
+      if (direction === 1) {
+         row = Math.floor( Math.random() * this.playgroundSize );
+         col = Math.floor( Math.random() * (this.playgroundSize - 3) );
+      } else {
+         row = Math.floor( Math.random() * (this.playgroundSize - 3) );
+         col = Math.floor( Math.random() * this.playgroundSize );
+      }
+
+      for (let i = 0; i < this.shipSize; i++) {
+         if (direction === 1) {
+            newShipLocations.push(row + '' + (col + i));
+         } else {
+            newShipLocations.push((row + i) + '' + col);
+         }
+      }
+      return newShipLocations;
+   },
+
+   collision: function() {
+
    }
+
 
 };
 
