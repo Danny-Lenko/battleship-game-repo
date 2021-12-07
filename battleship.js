@@ -57,7 +57,14 @@ let controller = {
    guesses: 0,
 
    processGuess: function(guess) {
-
+      let location = parseGuess(guess);
+      if (location) {
+         let hit = model.fire(location);
+         this.guesses++;
+         if (hit && model.shipsSunk === model.shipsNumber) {
+            view.displayMessage("You sank all my battleships in " + this.guesses + " guesses");
+         }
+      }
    }
 };
 
@@ -78,6 +85,28 @@ function parseGuess(guess) {
       return row + col;
    }
    return null;
+}
+
+function init() {
+   document.querySelector('#fireButton').addEventListener('click', processFireClick);
+   const guessInput = document.querySelector('#guessInput');
+   guessInput.onkeyup = processEnterPress;
+}
+window.onload = init;
+
+function processFireClick() {
+   const guessInput = document.querySelector('#guessInput');
+   const inputValue = guessInput.value;
+   controller.processGuess(inputValue);
+   guessInput.value = '';
+}
+
+function processEnterPress(e) {
+   const fireButton = document.querySelector('#fireButton');
+   if (e.key === 'Enter') {
+      fireButton.click();
+      return false;
+   }
 }
 
 
