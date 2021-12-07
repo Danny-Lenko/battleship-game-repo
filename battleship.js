@@ -20,9 +20,9 @@ let model = {
    shipsNumber: 3,
    shipsSunk: 0,
    ships: [
-      { locations: ['02', '03', '04'], hits: ['', '', ''] },
-      { locations: ['50', '51', '52'], hits: ['', '', ''] },
-      { locations: ['45', '55', '65'], hits: ['', '', ''] }
+      { locations: ['0', '0', '0'], hits: ['', '', ''] },
+      { locations: ['0', '0', '0'], hits: ['', '', ''] },
+      { locations: ['0', '0', '0'], hits: ['', '', ''] }
    ],
 
    fire: function(guess) {
@@ -49,6 +49,52 @@ let model = {
       this.shipsSunk++;
       view.displayMessage("You sank my battleship!");
       return true;
+   },
+
+   generateShipsLocations: function() {
+      let locations;
+
+      for (let i = 0; i < this.shipsNumber; i++) {
+         do {
+            locations = this.generateShip();
+         } while (this.collision(locations));
+         this.ships[i].locations = locations;
+      }
+   },
+
+   generateShip: function() {
+      let direction = Math.floor(Math.random() * 2);
+      let row, col;
+      let newShipLocations = [];
+
+      if (direction === 1) {
+         row = Math.floor(Math.random() * (this.boardSize - this.shipSize));
+         col = Math.floor(Math.random() * this.boardSize);
+      } else {
+         row = Math.floor(Math.random() * this.boardSize);
+         col = Math.floor(Math.random() * (this.boardSize - this.shipSize));
+      }
+
+      for (let i = 0; i < this.shipSize; i++) {
+         if (direction === 1) {
+            newShipLocations.push((row + i) + '' + col);
+         } else {
+            newShipLocations.push(row + '' + (col + i));
+         }
+      }
+      return newShipLocations;
+   },
+
+   collision: function(locations) {
+      for (let i = 0; i < this.shipsNumber; i++) {
+         let ship = this.ships[i];
+         for (let j = 0; j < locations.length; j++) {
+            if (ship.locations.indexOf(locations[j]) >= 0) {
+               return true;
+            }
+         }
+      }
+      return false;
    }
 };
 
@@ -91,6 +137,8 @@ function init() {
    document.querySelector('#fireButton').addEventListener('click', processClick);
    const guessInput = document.querySelector('#guessInput');
    guessInput.onkeyup = processEnterPress;
+
+   model.generateShipsLocations();
 }
 window.onload = init;
 
@@ -107,23 +155,6 @@ function processEnterPress(e) {
       return false;
    }
 }
-
-
-// controller.processGuess('A1');
-// controller.processGuess('B1');
-
-
-// controller.processGuess('A2');
-// controller.processGuess('A3');
-// controller.processGuess('A4');
-
-// controller.processGuess('F0');
-// controller.processGuess('F1');
-// controller.processGuess('F2');
-
-// controller.processGuess('E5');
-// controller.processGuess('F5');
-// controller.processGuess('G5');
 
 
 
