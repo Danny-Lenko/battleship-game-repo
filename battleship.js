@@ -33,7 +33,6 @@ let model = {
             ship.hits[index] = 'hit';
             view.displayHit(guess);
             this.isSunk(ship);
-            console.log(this.shipsSunk);
             return true;
          }
       }
@@ -57,15 +56,23 @@ let controller = {
    guesses: 0,
 
    processGuess: function(guess) {
-
+      let location = parseGuess(guess);
+      if (location) {
+         this.guesses++; 
+         let hit = model.fire(location);
+         console.log(hit);
+         if (hit && model.shipsSunk === model.shipsNumber) {
+            view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses");
+         }
+      }
    }
 };
 
 function parseGuess(guess) {
    let alphabet = ["A", "B", "C", "D", "E", "F", "G"];
-   let letter = guess.charAt(0);
-   let row = alphabet.indexOf(letter);
-   let col = guess.charAt(1);
+   const letter = guess.charAt(0);
+   const row = alphabet.indexOf(letter);
+   const col = guess.charAt(1);
 
    if (guess === null || guess.length !== 2) {
       alert("Oops, enter a letter and a number on the board");
@@ -79,6 +86,45 @@ function parseGuess(guess) {
    }
    return null;
 }
+
+function init() {
+   document.querySelector('#fireButton').addEventListener('click', processClick);
+   const guessInput = document.querySelector('#guessInput');
+   guessInput.onkeyup = processEnterPress;
+}
+window.onload = init;
+
+function processClick() {
+   const guessInput = document.querySelector('#guessInput');
+   const inputValue = guessInput.value;
+   controller.processGuess(inputValue);
+   guessInput.value = '';
+}
+function processEnterPress(e) {
+   const fireButton = document.querySelector('#fireButton');
+   if (e.key === 'Enter') {
+      fireButton.click();
+      return false;
+   }
+}
+
+
+// controller.processGuess('A1');
+// controller.processGuess('B1');
+
+
+// controller.processGuess('A2');
+// controller.processGuess('A3');
+// controller.processGuess('A4');
+
+// controller.processGuess('F0');
+// controller.processGuess('F1');
+// controller.processGuess('F2');
+
+// controller.processGuess('E5');
+// controller.processGuess('F5');
+// controller.processGuess('G5');
+
 
 
 

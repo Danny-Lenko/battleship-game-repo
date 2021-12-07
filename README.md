@@ -74,13 +74,13 @@ window.onload = init;
 // the function is initially listens to mouse clicks
 function init() {
 (...)
-   let guessInput = document.getElementById('guessInput');
+   const guessInput = document.querySelector('#guessInput');
    guessInput.onkeyup = handleKeyPress;
 }
 
 function handleKeyPress(e) {
    let fireButton = document.getElementById('fireButton');
-   if(e.key === "Enter") {
+   if(e.key === 'Enter') {
       fireButton.click();
       return false;
    }
