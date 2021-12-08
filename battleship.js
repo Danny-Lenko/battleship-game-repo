@@ -20,9 +20,9 @@ let model = {
    shipSize: 3,
    shipsSunk: 0,
    ships: [
-      { locations: ['00', '01', '02'], hits: ['', '', ''] },
-      { locations: ['10', '11', '12'], hits: ['', '', ''] },
-      { locations: ['20', '21', '22'], hits: ['', '', ''] }
+      { locations: [0, 0, 0], hits: ['', '', ''] },
+      { locations: [0, 0, 0], hits: ['', '', ''] },
+      { locations: [0, 0, 0], hits: ['', '', ''] }
    ],
 
    fire: function(guess) {
@@ -49,8 +49,53 @@ let model = {
       this.shipsSunk++;
       view.showMessage("You sank my battleship.");
       return true;
-   }
+   },
 
+   generateShipsLocations: function() {
+      let locations;
+      for (let i = 0; i < this.shipsNum; i++) {
+         do {
+            locations = this.generateShip();
+         } while (this.collision(locations));
+         this.ships[i].locations = locations;
+      }
+   },
+
+   generateShip: function() {
+      let direction = Math.floor(Math.random() * 2);
+      let row, col;
+      let newShipLocations = [];
+
+      if (direction === 1) {
+         row = Math.floor(Math.random() * (this.boardSize - this.shipSize));
+         col = Math.floor(Math.random() * this.boardSize);
+      } else {
+         row = Math.floor(Math.random() * this.boardSize);
+         col = Math.floor(Math.random() * (this.boardSize - this.shipSize));
+      }
+
+      for (let i = 0; i < this.shipsNum; i++) {
+         if (direction === 1) {
+            newShipLocations.push((row + i) + '' + col);
+         } else {
+            newShipLocations.push(row + '' + (col + i));
+         }
+      }
+
+      return newShipLocations;
+   },
+
+   collision: function(locations) {
+      for (let i = 0; i < this.shipsNum; i++) {
+         let ship = this.ships[i];
+         for (let j = 0; j < locations.length; j++) {
+            if (ship.locations.indexOf(locations[j]) >= 0) {
+               return true;
+            }
+         }
+      }
+      return false;
+   }
 };
 
 let controller = {
@@ -93,6 +138,8 @@ function init() {
    document.querySelector('#fireButton').addEventListener('click', processClick);
    const guessInput = document.querySelector('#guessInput');
    guessInput.onkeyup = processEnterPress;
+
+   model.generateShipsLocations();
 }
 window.onload = init;
 
@@ -111,3 +158,4 @@ function processEnterPress(e) {
    }
 }
 
+console.log(model.ships);
