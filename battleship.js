@@ -71,13 +71,12 @@ let controller = {
 function parseGuess(guess) {
    let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
-
    if (guess === null || guess.length !== 2) {
       alert("Oops, enter a letter and a number on the board");
    } else {
-      let firstLetter = guess.charAt(0);
-      let row = alphabet.indexOf(firstLetter);
-      let col = guess.charAt(1);
+      const firstLetter = guess.charAt(0);
+      const row = alphabet.indexOf(firstLetter);
+      const col = guess.charAt(1);
       if (isNaN(row) || isNaN(col)) {
          alert("Oops, that's not on the board");
       } else if (row < 0 || row >= model.boardSize 
@@ -86,8 +85,29 @@ function parseGuess(guess) {
       } else {
          return row + col;
       }
-   } 
+   }
    return null;
 }
 
+function init() {
+   document.querySelector('#fireButton').addEventListener('click', processClick);
+   const guessInput = document.querySelector('#guessInput');
+   guessInput.onkeyup = processEnterPress;
+}
+window.onload = init;
+
+function processClick() {
+   const guessInput = document.querySelector('#guessInput');
+   const inputValue = guessInput.value;
+   controller.processGuess(inputValue);
+   guessInput.value = '';
+}
+
+function processEnterPress(e) {
+   const fireButton = document.querySelector('#fireButton');
+   if (e.key === 'Enter') {
+      fireButton.click();
+      return false;
+   }
+}
 
