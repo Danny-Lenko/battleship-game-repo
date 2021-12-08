@@ -90,7 +90,44 @@ function handleKeyPress(e) {
 
 ### Continued development
 
-* CSS grid;
+* figure out why this key word does not work with arrow functions in such kind of a case
+```js
+let view = {
+   showMessage: (msg) => {
+      document.querySelector('#messageArea').innerHTML = msg;
+   },
+   showHit: (location) => {
+      document.getElementById(location).setAttribute('class', 'hit');
+      this.showMessage("HIT!");
+   },
+   showMiss: (location) => {
+      document.getElementById(location).setAttribute('class', 'miss');
+      this.showMessage("You missed.");
+   }
+};
+```
+* figure out why this piece of code does not process the numeric input properly, so I need to use what I eventually use
+```js
+function parseGuess(guess) {
+   let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+   const firstLetter = guess.charAt(0);
+   const row = alphabet.indexOf(firstLetter);
+   const col = guess.charAt(1);
+
+   if (guess === null || guess.length !== 2) {
+      alert("Oops, enter a letter and a number on the board");
+   } else if (isNaN(row) || isNaN(col)) {
+      alert("Oops, that's not on the board");
+   } else if (row < 0 || row >= model.boardSize 
+              || col < 0 || col >= model.boardSize ) {
+      alert("Oops, that's off the board");
+   } else {
+      return row + col;
+   }
+   return null;
+}
+```
+
 
 *Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
 
